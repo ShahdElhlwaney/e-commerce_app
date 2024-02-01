@@ -3,8 +3,7 @@ import 'package:e_commerce/core/widgets/button.dart';
 import 'package:e_commerce/features/home/data/models/item.dart';
 import 'package:e_commerce/features/home/presentation/manager/cart_manager.dart';
 import 'package:e_commerce/features/home/presentation/manager/favourite_manager.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/basket_count_component.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/item_review_component.dart';
+import 'package:e_commerce/features/home/presentation/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
