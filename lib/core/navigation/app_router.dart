@@ -9,7 +9,7 @@ import 'package:e_commerce/features/home/presentation/views/views.dart';
 import 'package:e_commerce/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
 
-class AppRouter extends RouterDelegate with ChangeNotifier,PopNavigatorRouterDelegateMixin{
+/*class AppRouter extends RouterDelegate with ChangeNotifier,PopNavigatorRouterDelegateMixin{
   AppRouter(  {required this.itemDetailsManager,required this.bottomNavBarManager,required this.authManager}){
     bottomNavBarManager.addListener(notifyListeners);
     authManager.addListener(notifyListeners);
@@ -108,4 +108,4 @@ class AppRouter extends RouterDelegate with ChangeNotifier,PopNavigatorRouterDel
   @override
   // TODO: implement navigatorKey
   GlobalKey<NavigatorState>? get navigatorKey =>  navigateKey;
-}
+}*/

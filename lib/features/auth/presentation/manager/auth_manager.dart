@@ -1,80 +1,40 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart';
+import 'package:e_commerce/core/services/api/api_errors.dart';
+import 'package:e_commerce/features/auth/data/models/login.dart';
+import 'package:e_commerce/features/auth/data/models/register.dart';
+import 'package:e_commerce/features/auth/data/models/user.dart';
+import 'package:e_commerce/features/auth/data/repos/auth_repo.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class AuthManager extends ChangeNotifier {
-  bool _initialized = false;
-  bool _isStarted = false;
-  bool _isConnectedWithNumber = false;
-  bool _isSignedIn = false;
-  bool _isLoggedIn = false;
-  bool _isSignedUp = false;
-  bool _enteredCode = false;
-  bool _toNumber = false;
-  bool get initialized => _initialized;
-  bool get isStarted => _isStarted;
-  bool get isConnectedWithNumber => _isConnectedWithNumber;
-  bool get isSignedIn => _isSignedIn;
-  bool get isLoggedIn => _isLoggedIn;
-  bool get isSignedUp => _isSignedUp;
-  bool get enteredCode => _enteredCode;
-  bool get toNumber => _toNumber;
-  void initializeApp() {
-    Timer(
-        const Duration(
-          milliseconds: 1000,
-        ), () {
-      _initialized = true;
-      notifyListeners();
+  final AuthRepo authRepo;
+
+  User? user;
+  AuthManager(this.authRepo);
+
+  Future<Either<Failure, Register>> signup() async {
+    final response = await authRepo.register('register', {
+      'name': user?.name,
+      'phone': user?.phone,
+      'email': user?.email,
+      'password': user?.password,
+      'image': user?.image ?? 'assets/app_pics/default_profile.jpg'
     });
+
+    return response;
   }
 
-  void start() {
-    _isStarted = true;
-    notifyListeners();
+  Future<Either<Failure, Login>> logIn(
+      {required String email, required String pass}) async {
+    final response =
+        await authRepo.login('login', {'email': email, 'password': pass});
+    return response;
   }
-
-  void connectWithNumber() {
-    _isConnectedWithNumber = true;
-    notifyListeners();
-  }
-
-  void signIn() {
-    _isSignedIn = true;
-    notifyListeners();
-  }
-
-  void logIn() {
-    _isLoggedIn = true;
-    notifyListeners();
-  }
-
-  void enterCode() {
-    _enteredCode = true;
-    notifyListeners();
-  }
-
-  void goToNumber() {
-    _toNumber = true;
-    notifyListeners();
-  }
-void notPop(){
-    _isLoggedIn=false;
-    _isSignedUp=false;
-    notifyListeners();
 }
-  void signUp() {
-    _isSignedUp = true;
-    notifyListeners();
-  }
-  void logout() {
-    _initialized = false;
-    _isSignedIn = false;
-    _isStarted = false;
-    _isConnectedWithNumber = false;
-    _isLoggedIn = false;
-    _isSignedUp = true;
-    initializeApp();
-    notifyListeners();
-  }
+
+AuthManager getAuthManager(BuildContext context, {bool listen = true}) {
+  return Provider.of<AuthManager>(context, listen: listen);
 }

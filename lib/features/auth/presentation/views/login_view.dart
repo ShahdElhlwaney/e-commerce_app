@@ -1,6 +1,9 @@
 import 'package:e_commerce/core/constants/app_colors.dart';
+import 'package:e_commerce/core/theme/bottom_sheet.dart';
 import 'package:e_commerce/core/widgets/button.dart';
 import 'package:e_commerce/features/auth/presentation/manager/auth_manager.dart';
+import 'package:e_commerce/features/auth/presentation/views/signup_view.dart';
+import 'package:e_commerce/features/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,12 +15,13 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   bool _passwordVisible = false;
+  String _email='';
+  String _password='';
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    final _authManager=getAuthManager(context);
     return Scaffold(
         body: Form(
       key: formKey,
@@ -33,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
             Text(
-              'Loging',
+              'Login',
               style: Theme.of(context).textTheme.displayLarge,
             ),
             const SizedBox(
@@ -46,7 +50,7 @@ class _LoginViewState extends State<LoginView> {
                   .bodySmall!
                   .copyWith(color: Colors.grey),
             ),
-            SizedBox(height:39,),
+            const SizedBox(height:39,),
             Text(
               'Email',
               style: Theme.of(context)
@@ -81,14 +85,6 @@ class _LoginViewState extends State<LoginView> {
                   .copyWith(color: Colors.black),
             ),
             SizedBox(height: 25,),
-            Button(
-              textButton: 'Log In',
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  Provider.of<AuthManager>(context,listen: false).logIn();
-                }
-              },
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -101,7 +97,9 @@ class _LoginViewState extends State<LoginView> {
               ),
               TextButton(
                 onPressed: () {
-                  Provider.of<AuthManager>(context,listen: false).signUp();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context)=>const SignUpView())
+                  );
                 },
                 child: Text(
                   ' sign up',
@@ -111,7 +109,23 @@ class _LoginViewState extends State<LoginView> {
                       .copyWith(color: AppColors.appColor),
                 ),
               )
-            ])
+            ]),
+            Button(
+              textButton: 'Log In',
+              onPressed: ()async {
+                if (formKey.currentState!.validate()) {
+                 final response=await _authManager.logIn(email: _email, pass: _password);
+                   response.fold((failure) {
+                     print('failure');
+                   }, (response) {
+                       bottomSheet(context,response.message,color:AppColors.appColor);
+                       Navigator.pushReplacement(context, MaterialPageRoute(
+                           builder: (context)=>const HomeView()));
+                   });
+                //  Provider.of<AuthManager>(context,listen: false).logIn();
+                }
+              },
+            )
           ]),
         ),
       ),
@@ -120,9 +134,8 @@ class _LoginViewState extends State<LoginView> {
 
   TextFormField passwordFormField() {
     return TextFormField(
-        controller: _passwordController,
         onChanged: (value) {
-          _passwordController.text = value;
+          _password= value;
         },
         validator: (data) {
           if (data!.isEmpty) {
@@ -147,14 +160,13 @@ class _LoginViewState extends State<LoginView> {
 
   TextFormField emailFormField() {
     return TextFormField(
-      controller: _emailController,
       onChanged: (value) {
         setState(() {
-          _emailController.text = value;
+          _email = value;
         });
       },
       validator: (value) {
-        if (_emailController.text.isEmpty) {
+        if (_email.isEmpty) {
           return "* required";
         }
       },

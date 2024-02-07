@@ -1,18 +1,20 @@
 import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/core/widgets/button.dart';
+import 'package:e_commerce/features/home/data/models/home.dart';
 import 'package:e_commerce/features/home/data/models/item.dart';
 import 'package:e_commerce/features/home/presentation/manager/cart_manager.dart';
 import 'package:e_commerce/features/home/presentation/manager/favourite_manager.dart';
 import 'package:e_commerce/features/home/presentation/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image/image.dart' as img;
 
 class ItemDetailsView extends StatefulWidget {
   const ItemDetailsView({
     super.key,
-    required this.item,
+    required this.product,
   });
-  final Item item;
+  final Product product;
 
   @override
   State<ItemDetailsView> createState() => _ItemDetailsViewState();
@@ -41,11 +43,15 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         bottomRight: Radius.circular(16),
                         bottomLeft: Radius.circular(16))),
                 alignment: Alignment.center,
-                child: Image.asset(
-                  widget.item.image,
+                child:
+
+                Image.network(
+
+                  widget.product.image!
+                  ,
                   fit: BoxFit.cover,
-                  width: 130,
-                )),
+              ),
+            ),
             const SizedBox(
               height: 30,
             ),
@@ -58,14 +64,14 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.item.name,
+                        widget.product.name!.substring(0,24),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(
                         height: 10.5,
                       ),
                       Text(
-                        widget.item.quantity,
+                        widget.product.oldPrice.toString(),
                         style: Theme.of(context)
                             .textTheme
                             .displaySmall!
@@ -76,30 +82,31 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     ],
                   ),
                   GestureDetector(
-                      onTap: () {
+                    /*  onTap: () {
                         setState(() {
                           _isFavourite = !_isFavourite;
-                          widget.item.isFavourite =
+                          widget.product.isFavourite =
                               _isFavourite;
                         });
 
-                        if (widget.item.isFavourite!) {
+                        if (widget.product.isFavourite!) {
                           Provider.of<FavouriteManager>(context, listen: false)
-                              .addFavouriteItem(widget.item);
+                              .addFavouriteItem(widget.product);
                         } else {
                           Provider.of<FavouriteManager>(context, listen: false)
-                              .deleteFavouriteItem(widget.item);
+                              .deleteFavouriteItem(widget.product);
                         }
-                      },
-                      child: widget.item.isFavourite ?? false
-                          ? const Icon(
+                      }*///,
+                      child: /*widget.product.isFavourite ?? false?*/
+                           const Icon(
                               Icons.favorite,
                               color: Colors.red,
                             )
-                          : const Icon(
+                         /* : const Icon(
                               Icons.favorite_border,
                               color: Colors.grey,
-                            ))
+                            )*/
+            )
                 ],
               ),
             ),
@@ -124,7 +131,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                       Image.asset('assets/home_pics/add_item.png')
                     ],
                   ),
-                  Text('\$${widget.item.price}')
+                  Text('\$${widget.product.price}')
                 ],
               ),
             ),
@@ -149,7 +156,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 collapsedTextColor: AppColors.appColor,
                 children: [
                   ListTile(
-                    title: Text(widget.item.description ?? ''),
+                    title: Text(widget.product.description??'' ),
                   ),
                 ],
               ),
@@ -173,8 +180,8 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
               child: Button(
                 textButton: 'Add To Basket',
                 onPressed: () {
-                  Provider.of<CartManager>(context, listen: false)
-                      .addItem(widget.item);
+                  /*Provider.of<CartManager>(context, listen: false)
+                      .addItem(widget.product);*/
                 },
               ),
             )

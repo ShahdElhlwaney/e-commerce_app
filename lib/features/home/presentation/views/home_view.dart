@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'views.dart';
 class HomeView extends StatelessWidget {
-  const HomeView({Key? key, /*required this.currentTab*/}) : super(key: key);
- //final int currentTab;
+  const HomeView({Key? key, }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     List<Widget>homeViews=[const ShopView(),const ExploreView(),const CartView(),const FavouriteView(),const AccountView()];
@@ -25,10 +24,10 @@ class HomeView extends StatelessWidget {
               BottomNavigationBarItem(icon:  Icon(Icons.perm_identity),label: 'Account')
             ],
             onTap: (index){
-              manager.goToTab(index);
+             manager.goToTab(index);
             },
           ),
-         body:homeViews[manager.currentTab] ,
+         body:IndexedStack(index: manager.currentTab,children: homeViews,)
         );
       },
     );

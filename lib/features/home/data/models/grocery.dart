@@ -11,4 +11,5 @@ class Grocery{
     required this.image,
     required this.color,
   });
+
 }

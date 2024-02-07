@@ -1,16 +1,12 @@
 import 'package:e_commerce/core/constants/app_pages.dart';
 import 'package:e_commerce/core/widgets/button.dart';
 import 'package:e_commerce/features/auth/presentation/manager/auth_manager.dart';
+import 'package:e_commerce/features/auth/presentation/views/login_view.dart';
+import 'package:e_commerce/features/auth/presentation/views/phone_number_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StartView extends StatelessWidget {
- /* static MaterialPage page(){
-    return const MaterialPage(
-      name: AppPages.welcomePath,
-        key:ValueKey(AppPages.welcomePath) ,
-        child:StartView() );
-  }*/
   const StartView({Key? key}) : super(key: key);
 
   @override
@@ -50,7 +46,8 @@ class StartView extends StatelessWidget {
                 Button(
                   textButton: 'Get Started',
                   onPressed: () {
-                     Provider.of<AuthManager>(context,listen: false).start();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context)=>const PhoneNumberView()));
                   },
                 )
               ],

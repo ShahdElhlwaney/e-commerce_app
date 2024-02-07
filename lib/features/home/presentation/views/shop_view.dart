@@ -13,6 +13,7 @@ class ShopView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
+          padding: EdgeInsets.all(16),
             children: [
           const SizedBox(height: 25,),
         Column(
@@ -85,7 +86,7 @@ class ShopView extends StatelessWidget {
         height: 12,
       ),
      const SizedBox(height: 20,),
-     const BestSellingListView(),
+     //const BestSellingListView(),
       const SizedBox(
         height: 19,
       )

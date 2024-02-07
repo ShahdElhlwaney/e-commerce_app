@@ -4,10 +4,10 @@ import 'package:e_commerce/features/home/data/models/banner_image.dart';
 import 'package:flutter/material.dart';
 
 class BannerComponent extends StatelessWidget {
-  const BannerComponent({Key? key, required this.bannerImage}) : super(key: key);
-   final BannerImage bannerImage;
+  const BannerComponent({Key? key, required this.image}) : super(key: key);
+   final String image;
   @override
   Widget build(BuildContext context) {
-    return Image.asset(bannerImage.image,fit: BoxFit.cover,);
+    return Image.network(image ,fit: BoxFit.cover,);
   }
 }

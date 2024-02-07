@@ -72,7 +72,7 @@ class SignInView extends StatelessWidget {
               icon: Icons.g_mobiledata_outlined,
               textButton: 'Continue with Google',
               onPressed: () {
-                Provider.of<AuthManager>(context,listen: false).signIn();
+              //  Provider.of<AuthManager>(context,listen: false).signIn();
               },
               colorButton: Colors.blue.shade800.withOpacity(.9),
             ),

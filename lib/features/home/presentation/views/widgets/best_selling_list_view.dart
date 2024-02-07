@@ -1,6 +1,7 @@
 
 
 import 'package:e_commerce/features/home/data/models/item.dart';
+import 'package:e_commerce/features/home/presentation/manager/home_manager.dart';
 import 'package:e_commerce/features/home/presentation/views/widgets/home_item.dart';
 import 'package:flutter/material.dart';
 
@@ -10,34 +11,41 @@ class BestSellingListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height=MediaQuery.of(context).size.height;
-    List<Item>items=[
-      Item(name: 'Organic Bananas', image: 'assets/home_pics/shop.png',
-          quantity: '7pcs, Priceg', price: '4.99'),
-      Item(name: 'Organic Bananas', image: 'assets/home_pics/shop.png',
-          quantity: '7pcs, Priceg', price: '4.99'),
-      Item(name: 'Organic Bananas', image: 'assets/home_pics/shop.png',
-          quantity: '7pcs, Priceg', price: '4.99'),
-      Item(name: 'Organic Bananas', image: 'assets/home_pics/shop.png',
-          quantity: '7pcs, Priceg', price: '4.99'),
-      Item(name: 'Organic Bananas', image: 'assets/home_pics/shop.png',
-          quantity: '7pcs, Priceg', price: '4.99'),
-      Item(name: 'Organic Bananas', image: 'assets/home_pics/shop.png',
-          quantity: '7pcs, Priceg', price: '4.99'),
-      Item(name: 'Organic Bananas', image: 'assets/home_pics/shop.png',
-          quantity: '7pcs, Priceg', price: '4.99'),
-    ];
+    final homeManager=getHomeManager(context);
     return SizedBox(
         height: height*.28,
-      child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context,index){
-            return HomeItem(item: items[index],);
-          },
-          separatorBuilder: (context,index){
-            return const SizedBox(width: 16,);
-          },
-          itemCount: items.length
-      ),
+      child: FutureBuilder(
+        future: homeManager.getProducts(),
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data!.fold((failure) {
+              return Text(failure.toString());
+            }, (products) {
+              return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () {
+                          //Provider.of<ItemDetailsManager>(context,listen: false)
+                          // .displayItemDetails(items[index]);
+                        },
+                        child: HomeItem(
+                          product: products[index],
+                        ));
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      width: 16,
+                    );
+                  },
+                  itemCount: products.length);
+            });
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      )
     );
+
   }
 }
