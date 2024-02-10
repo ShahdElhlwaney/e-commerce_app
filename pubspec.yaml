@@ -34,7 +34,7 @@ dependencies:
   build_runner:
   dio:
   dartz:
-  image:
+  flutter_secure_storage:
   flutter:
     sdk: flutter
 

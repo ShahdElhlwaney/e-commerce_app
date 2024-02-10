@@ -1,9 +1,4 @@
-import 'package:e_commerce/features/home/presentation/views/widgets/banners_list_view.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/best_selling_list_view.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/exclusive_offer_list_view.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/groceries_list_view.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/headline_list_view_component.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/search_component.dart';
+import 'package:e_commerce/features/home/presentation/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ShopView extends StatelessWidget {
@@ -12,14 +7,17 @@ class ShopView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
-          padding: EdgeInsets.all(16),
-            children: [
-          const SizedBox(height: 25,),
-        Column(
+        body: ListView(padding: const EdgeInsets.all(16), children: [
+      const SizedBox(
+        height: 25,
+      ),
+      Column(
         children: [
-          Image.asset('assets/app_pics/colored_logo_app.png',
-            height: 55,width: 55,),
+          Image.asset(
+            'assets/app_pics/colored_logo_app.png',
+            height: 55,
+            width: 55,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -29,21 +27,24 @@ class ShopView extends StatelessWidget {
               ),
               Text(
                 'Dhaka, Banassre',
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w900
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayMedium!
+                    .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
               ),
             ],
           ),
         ],
       ),
-     const SizedBox(
+      const SizedBox(
         height: 20,
       ),
-      const Padding(
-        padding: EdgeInsets.only(left: 16,right: 16),
-        child: SearchComponent(),
+      Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: SearchComponent(
+          onChanged: (value) {},
+          text: '',
+        ),
       ),
       const SizedBox(
         height: 20,
@@ -52,7 +53,7 @@ class ShopView extends StatelessWidget {
       const SizedBox(
         height: 50,
       ),
-     HeadLineListViewComponent(
+      HeadLineListViewComponent(
         headLine: 'Exclusive Offer',
         onTab: () {},
       ),
@@ -81,16 +82,17 @@ class ShopView extends StatelessWidget {
       const SizedBox(
         height: 28,
       ),
-     const GroceriesListView(),
+      const GroceriesListView(),
       const SizedBox(
         height: 12,
       ),
-     const SizedBox(height: 20,),
-     //const BestSellingListView(),
+      const SizedBox(
+        height: 20,
+      ),
+      //const BestSellingListView(),
       const SizedBox(
         height: 19,
       )
-    ])
-    );
+    ]));
   }
 }

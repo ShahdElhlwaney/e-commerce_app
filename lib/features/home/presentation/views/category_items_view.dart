@@ -1,73 +1,63 @@
-import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz.dart';
-import 'package:e_commerce/core/services/api/api_errors.dart';
-import 'package:e_commerce/features/home/data/models/home.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/home_item.dart';
+import 'package:e_commerce/features/home/presentation/manager/home_manager.dart';
+import 'package:e_commerce/features/home/presentation/views/widgets/category_product_item.dart';
 import 'package:flutter/material.dart';
 
-class CategoryItemsView extends StatelessWidget {
-  const CategoryItemsView({Key? key, required this.funCategoryDetails})
+class CategoryItemsView extends StatefulWidget {
+  const CategoryItemsView(
+      {Key? key, required this.id, required this.categoryName})
       : super(key: key);
-  final Future<Either<Failure, List<Product>>> funCategoryDetails;
+  final int id;
+  final String categoryName;
+  @override
+  State<CategoryItemsView> createState() => _CategoryItemsViewState();
+}
 
-
+class _CategoryItemsViewState extends State<CategoryItemsView> {
   @override
   Widget build(BuildContext context) {
-
+    final homeManager = getHomeManager(context);
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(85),
-          child: AppBar(
-            title: const Center(child: Text('Beverages')),
-            elevation: 0,
-            leading: GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                size: 18,
-              ),
-            ),
-            actions: const [
-              Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: Icon(Icons.explore_off_sharp),
-              )
-            ],
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: const Icon(
+                Icons.arrow_back_ios_new), // Replace with your desired icon
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text(
+            widget.categoryName,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         body: FutureBuilder(
-          future: funCategoryDetails,
+          future: homeManager.getCategoryDetails(id: widget.id),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData) {
               return snapshot.data!.fold((failure) {
                 return Text(failure.toString());
-              }, (categoryProducts) {
+              }, (products) {
                 return GridView.builder(
                     padding:
-                    const EdgeInsets.only(top: 20, left: 15, right: 20),
-                    itemCount: categoryProducts.length,
+                        const EdgeInsets.only(left: 10, right: 10, top: 20),
+                    itemCount: products.length,
                     gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 2 / 2.5,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 15),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 3 / 3.8,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 15),
                     itemBuilder: (context, index) {
-                      return HomeItem(
-                        key: Key(categoryProducts[index].id.toString()),
-                        product: categoryProducts[index],
-                      );
+                      return GestureDetector(
+                          onTap: () {},
+                          child: CategoryProductItem(product: products[index]));
                     });
               });
             } else {
               return const Center(child: CircularProgressIndicator());
             }
           },
-        )
-    );
+        ));
   }
 }
-
-

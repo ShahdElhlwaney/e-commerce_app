@@ -1,6 +1,5 @@
 
 
-import 'package:e_commerce/features/home/data/models/banner_image.dart';
 import 'package:flutter/material.dart';
 
 class BannerComponent extends StatelessWidget {

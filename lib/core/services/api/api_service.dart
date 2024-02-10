@@ -45,7 +45,6 @@ class ApiService  {
       return Left(ServerFailure.handleNetworkErrorType(error));
     }
   }
-
   Future<Either<Failure, dynamic>> post({
     required String endPoint,
     dynamic body,
@@ -58,6 +57,7 @@ class ApiService  {
         data: body,
         queryParameters: query,
         options: options,
+
       );
       return Right(response.data);
     } on DioException catch (error) {

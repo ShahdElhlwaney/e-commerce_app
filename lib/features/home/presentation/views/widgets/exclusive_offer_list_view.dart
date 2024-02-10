@@ -8,7 +8,7 @@ class ExclusiveOfferListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeManager = getHomeManager(context);
+    final homeManager = getHomeManager(context );
     final height = MediaQuery.of(context).size.height;
     return SizedBox(
         height: height * .28,
@@ -26,11 +26,12 @@ class ExclusiveOfferListView extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context)=>
-                                    ItemDetailsView(product: products[index],)));
+                                    ItemDetailsView(product: products[index],
+                                     )));
                             //Provider.of<ItemDetailsManager>(context,listen: false)
                             // .displayItemDetails(items[index]);
                           },
-                          child: HomeItem(
+                          child: HomeProduct(
                             product: products[index],
                           ));
                     },

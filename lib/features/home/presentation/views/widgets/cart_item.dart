@@ -1,24 +1,21 @@
-import 'package:e_commerce/features/home/data/models/item.dart';
-import 'package:e_commerce/features/home/presentation/manager/cart_manager.dart';
+import 'package:e_commerce/features/home/data/models/get_cart.dart';
+import 'package:e_commerce/features/home/presentation/manager/home_manager.dart';
 import 'package:e_commerce/features/home/presentation/views/widgets/checkout_count_component.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CartItem extends StatelessWidget {
-  const CartItem({Key? key, required this.item, required this.removeItem}) : super(key: key);
-  final Item item;
-  final Function() removeItem;
+  const CartItem({Key? key, required this.product}) : super(key: key);
+  final CartProduct product;
   @override
   Widget build(BuildContext context) {
+    final homeManager = getHomeManager(context);
     return Container(
         width: 363.6,
         height: 160,
         color: Colors.white,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-          Image.asset(
-            item.image,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          Image.network(
+            product.image!,
             width: 70.43,
             height: 64.69,
           ),
@@ -30,14 +27,14 @@ class CartItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                item.name,
+                product.name!.substring(0, 15),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(
                 height: 5,
               ),
               Text(
-                item.quantity,
+                product.oldPrice.toString(),
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
@@ -50,7 +47,9 @@ class CartItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CheckoutCountComponent(
-                    onPressed: () {},
+                    onPressed: () {
+                      homeManager.changeCarts(product.id!);
+                    },
                     sign: 'assets/home_pics/min_item.png',
                   ),
                   const SizedBox(
@@ -77,7 +76,9 @@ class CartItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: removeItem,
+                onTap: () {
+                  homeManager.changeCarts(product.id);
+                },
                 child: const Icon(
                   Icons.close,
                   size: 25,
@@ -85,7 +86,7 @@ class CartItem extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$${item.price}',
+                '\$${product.price}',
                 style: Theme.of(context).textTheme.bodyMedium,
               )
             ],

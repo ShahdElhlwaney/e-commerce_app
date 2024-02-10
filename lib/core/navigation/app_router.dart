@@ -3,7 +3,6 @@ import 'package:e_commerce/core/constants/app_pages.dart';
 import 'package:e_commerce/features/auth/presentation/manager/auth_manager.dart';
 import 'package:e_commerce/features/auth/presentation/views/views.dart';
 import 'package:e_commerce/features/home/presentation/manager/bottom_nav_bar_manager.dart';
-import 'package:e_commerce/features/home/presentation/manager/item_details_manager.dart';
 import 'package:e_commerce/features/home/presentation/views/item_details_view.dart';
 import 'package:e_commerce/features/home/presentation/views/views.dart';
 import 'package:e_commerce/features/splash/presentation/views/splash_view.dart';

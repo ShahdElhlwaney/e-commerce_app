@@ -3,18 +3,18 @@
 class Home
 {
   bool? status;
-  Data? data;
+  HomeData? data;
   Home.fromJson(Map<String,dynamic>json)
   {
     status=json['status'];
-    data=Data.fromJson(json['data']);
+    data=HomeData.fromJson(json['data']);
   }
 }
-class Data
+class HomeData
 {
   List<Baner>banners=[];
   List<Product>products=[];
-  Data.fromJson(Map<String,dynamic>json)
+  HomeData.fromJson(Map<String,dynamic>json)
   {
     json['banners'].forEach((element){
       banners.add(Baner.fromJson(element));

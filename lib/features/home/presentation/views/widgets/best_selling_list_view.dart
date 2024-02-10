@@ -1,6 +1,5 @@
 
 
-import 'package:e_commerce/features/home/data/models/item.dart';
 import 'package:e_commerce/features/home/presentation/manager/home_manager.dart';
 import 'package:e_commerce/features/home/presentation/views/widgets/home_item.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,7 @@ class BestSellingListView extends StatelessWidget {
                           //Provider.of<ItemDetailsManager>(context,listen: false)
                           // .displayItemDetails(items[index]);
                         },
-                        child: HomeItem(
+                        child: HomeProduct(
                           product: products[index],
                         ));
                   },

@@ -1,10 +1,13 @@
-import 'package:e_commerce/features/home/data/models/home.dart';
-import 'package:e_commerce/features/home/presentation/views/widgets/add_cart_button.dart';
+
+
+import 'package:e_commerce/features/home/data/models/search.dart';
 import 'package:flutter/material.dart';
 
-class HomeProduct extends StatelessWidget {
-  const HomeProduct({Key? key, required this.product}) : super(key: key);
-  final Product product;
+import 'add_cart_button.dart';
+
+class SearchProduct extends StatelessWidget {
+  const SearchProduct({Key? key, required this.product}) : super(key: key);
+  final DataProduct product;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,11 +43,9 @@ class HomeProduct extends StatelessWidget {
           ),
           const Spacer(),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('\$${product.price}'),
-              const SizedBox(
-                width: 40,
-              ),
               const AddCartButton()
             ],
           )

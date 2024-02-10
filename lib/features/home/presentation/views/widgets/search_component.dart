@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SearchComponent extends StatefulWidget {
+class SearchComponent extends StatelessWidget {
   const SearchComponent({
-    super.key,
+    super.key, required this.onChanged, required this.text,
   });
 
-  @override
-  State<SearchComponent> createState() => _SearchComponentState();
-}
-
-class _SearchComponentState extends State<SearchComponent> {
-  String text = '';
+final Function(String) onChanged;
+final String text;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -21,11 +17,7 @@ class _SearchComponentState extends State<SearchComponent> {
           color: Color(0xffF2F3F2),
           borderRadius: BorderRadius.all(Radius.circular(8))),
       child: TextField(
-          onChanged: (value) {
-            setState(() {
-              text = value;
-            });
-          },
+          onChanged:onChanged,
           decoration: InputDecoration(
             border: InputBorder.none,
             suffixIcon: text.isNotEmpty ? const Icon(Icons.close) : null,

@@ -1,18 +1,18 @@
 
 
 
-class CategoryData{
+class Category{
   bool? status;
-  Data? data;
- CategoryData.fromJson(Map<String,dynamic>json)
+  CategoriesData? data;
+ Category.fromJson(Map<String,dynamic>json)
  {
    status=json['status'];
-   data=Data.fromJson(json['data']);
+   data=CategoriesData.fromJson(json['data']);
  }
 }
-class Data{
+class CategoriesData{
 List<CategoryItem>categories=[];
-Data.fromJson(Map<String,dynamic>json){
+CategoriesData.fromJson(Map<String,dynamic>json){
   json['data'].forEach((element){
     categories.add(CategoryItem.fromJson(element));
   });
